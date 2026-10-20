@@ -1,0 +1,101 @@
+/* 1704 Audio Labs: the Principles poster (1200 x 1500 design px) and below it the budget note and the projects.
+   Poster sizes are design px times --u, so it scales with its container; on phones it reflows, in print
+   only the poster fills an A4 page. */
+:root {
+  --paper: #F4F2EE; --ink: #1A1A1A; --graphite: #3A3732; --pencil: #5A5752;
+  --precision: #2F6383; --precision-deep: #174257; --precision-tint: #E3EAF0;
+  --character: #B4471C; --character-deep: #7A3410; --character-tint: #F5E3D7;
+  --display: "Instrument Serif", Georgia, serif; --text: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html { background: #E9E6E0; }
+body { margin: 0; color: var(--ink); font-family: var(--text); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--character); text-underline-offset: 3px; }
+a:hover { color: var(--character); }
+
+.tools { max-width: 980px; margin: 0 auto; padding: 18px 16px 0; display: flex; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--graphite); }
+.tools button { font: inherit; color: var(--ink); background: none; border: 1px solid var(--ink); border-radius: 3px;
+  padding: 6px 12px; cursor: pointer; min-height: 32px; }
+.tools button:hover { color: var(--character); border-color: var(--character); }
+.wrap { container-type: inline-size; width: min(100% - 32px, 980px); margin: 16px auto 0; }
+
+.poster { --u: calc(100cqw / 1200); width: 100cqw; aspect-ratio: 1200 / 1500; overflow: hidden; background: var(--paper);
+  padding: calc(88 * var(--u)) calc(96 * var(--u)); display: flex; flex-direction: column; gap: calc(64 * var(--u)); }
+.poster p, .poster h1 { margin: 0; }
+.mast { display: flex; justify-content: space-between; align-items: baseline; gap: calc(16 * var(--u));
+  border-bottom: 1px solid var(--ink); padding-bottom: calc(20 * var(--u)); font-family: var(--mono); }
+.mast b { font-size: calc(18 * var(--u)); font-weight: 500; letter-spacing: .04em; }
+.mast span { font-size: calc(16 * var(--u)); color: var(--pencil); }
+.belief { display: flex; flex-direction: column; gap: calc(20 * var(--u)); }
+.lab { font-family: var(--mono); font-size: calc(16 * var(--u)); font-weight: 500; color: var(--pencil); }
+.belief h1 { font-family: var(--display); font-weight: 400; font-size: calc(76 * var(--u)); line-height: 1.08;
+  letter-spacing: -.01em; max-width: calc(960 * var(--u)); }
+.belief p { font-size: calc(21 * var(--u)); line-height: 1.55; color: var(--graphite); max-width: calc(860 * var(--u)); }
+.grid { display: grid; grid-template-columns: calc(180 * var(--u)) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr); gap: calc(16 * var(--u)); flex-grow: 1; }
+.col { font-family: var(--mono); font-size: calc(17 * var(--u)); font-weight: 500; padding: 0 calc(4 * var(--u)) calc(6 * var(--u)); }
+.col--p { color: var(--precision); } .col--c { color: var(--character); }
+.row { display: flex; flex-direction: column; gap: calc(6 * var(--u)); padding-top: calc(30 * var(--u)); }
+.row b { font-size: calc(22 * var(--u)); font-weight: 500; }
+.row span { font-size: calc(17 * var(--u)); color: var(--pencil); }
+.cell { border-radius: 4px; padding: calc(30 * var(--u)) calc(32 * var(--u)); display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
+.cell b { font-size: calc(30 * var(--u)); font-weight: 500; line-height: 1.2; }
+.cell span { font-size: calc(19 * var(--u)); line-height: 1.55; text-wrap: pretty; }
+.tint-p { background: var(--precision-tint); } .tint-p b { color: var(--precision-deep); } .tint-p span { color: #1E2B31; }
+.tint-c { background: var(--character-tint); } .tint-c b { color: var(--character-deep); } .tint-c span { color: #33231A; }
+
+
+@media (max-width: 700px) {
+  .wrap { width: 100%; margin: 12px 0 0; }
+  .poster { --u: .62px; width: 100%; aspect-ratio: auto; overflow: visible; padding: 28px 16px; gap: 32px; }
+  .mast { flex-direction: column; gap: 4px; }
+  .mast b { font-size: 14px; } .mast span, .lab { font-size: 12px; }
+  .belief h1 { font-size: 42px; }
+  .belief p { font-size: 17px; }
+  .grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 10px; }
+  .grid > span:first-child, .col { display: none; }
+  .row { padding-top: 16px; } .row b { font-size: 18px; } .row span { font-size: 14px; }
+  .cell { padding: 16px 18px; gap: 6px; }
+  .cell b { font-size: 21px; } .cell span { font-size: 15px; }
+  .cell::before { font-family: var(--mono); font-size: 12px; font-weight: 500; }
+  .tint-p::before { content: "Precision"; color: var(--precision); }
+  .tint-c::before { content: "Character"; color: var(--character); }
+  }
+
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { background: var(--paper); }
+  .tools, .below { display: none; }
+  .wrap { width: 210mm; margin: 17mm 0 0; }
+  .poster { width: 210mm; height: 262.5mm; aspect-ratio: auto; break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* below the poster: the budget note, the projects, the colophon */
+.below { width: min(100% - 32px, 980px); margin: 0 auto; padding: 56px 0 40px; display: flex; flex-direction: column; gap: 56px; }
+.below h2 { font-family: var(--display); font-weight: 400; font-size: 44px; line-height: 1.1; margin: 8px 0 14px; letter-spacing: -.01em; }
+.below p { margin: 0 0 12px; font-size: 17px; line-height: 1.6; color: var(--graphite); max-width: 720px; }
+.below .lab { font-size: 13px; }
+.budget { border-top: 1px solid var(--ink); padding-top: 20px; }
+.projects { border-top: 1px solid var(--ink); padding-top: 20px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 18px; }
+.card { background: var(--paper); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
+.card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.card div { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
+.card .num { font-family: var(--mono); font-size: 13px; color: var(--character); }
+.card h3 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.1; margin: 0; }
+.card p { font-size: 15px; margin: 0; }
+.card nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: auto; padding-top: 10px; font-family: var(--mono); font-size: 13px; }
+.colophon { border-top: 1px solid var(--ink); padding-top: 14px; display: flex; justify-content: space-between; flex-wrap: wrap;
+  gap: 8px 24px; font-family: var(--mono); font-size: 12px; color: var(--pencil); }
+
+@media (max-width: 700px) {
+  .below { padding-top: 36px; gap: 40px; }
+  .below h2 { font-size: 32px; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .card h3 { font-size: 28px; }
+}
+
+@media print { .below { display: none; } }
