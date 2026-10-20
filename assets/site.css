@@ -2,7 +2,7 @@
    Poster sizes are design px times --u, so it scales with its container; on phones it reflows, in print
    only the poster fills an A4 page. */
 :root {
-  --paper: #F4F2EE; --ink: #1A1A1A; --graphite: #3A3732; --pencil: #5A5752;
+  --paper: #F4F2EE; --ink: #1A1A1A; --graphite: #3A3732; --pencil: #5A5752; --tint: #EAE7E1;
   --precision: #2F6383; --precision-deep: #174257; --precision-tint: #E3EAF0;
   --character: #B4471C; --character-deep: #7A3410; --character-tint: #F5E3D7;
   --display: "Instrument Serif", Georgia, serif; --text: "IBM Plex Sans", system-ui, sans-serif;
@@ -11,14 +11,15 @@
 * { box-sizing: border-box; }
 html { background: #E9E6E0; }
 body { margin: 0; color: var(--ink); font-family: var(--text); -webkit-font-smoothing: antialiased; }
-a { color: inherit; text-decoration: underline; text-decoration-color: var(--character); text-underline-offset: 3px; }
-a:hover { color: var(--character); }
+/* colour means data: the brand is ink on paper; blue and terracotta only label Precision and Character */
+a { color: inherit; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; }
+a:hover { color: var(--graphite); }
 
 .tools { max-width: 980px; margin: 0 auto; padding: 18px 16px 0; display: flex; justify-content: space-between;
   gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--graphite); }
 .tools button { font: inherit; color: var(--ink); background: none; border: 1px solid var(--ink); border-radius: 3px;
   padding: 6px 12px; cursor: pointer; min-height: 32px; }
-.tools button:hover { color: var(--character); border-color: var(--character); }
+.tools button:hover { color: var(--graphite); border-color: var(--graphite); }
 .wrap { container-type: inline-size; width: min(100% - 32px, 980px); margin: 16px auto 0; }
 
 .poster { --u: calc(100cqw / 1200); width: 100cqw; aspect-ratio: 1200 / 1500; overflow: hidden; background: var(--paper);
@@ -27,6 +28,9 @@ a:hover { color: var(--character); }
 .mast { display: flex; justify-content: space-between; align-items: baseline; gap: calc(16 * var(--u));
   border-bottom: 1px solid var(--ink); padding-bottom: calc(20 * var(--u)); font-family: var(--mono); }
 .mast b { font-size: calc(18 * var(--u)); font-weight: 500; letter-spacing: .04em; }
+.mast img { display: block; height: calc(52 * var(--u)); width: auto; }
+.mast { align-items: flex-end; }
+.brand span { font-family: var(--display); font-size: 22px; line-height: 1; color: var(--ink); }
 .mast span { font-size: calc(16 * var(--u)); color: var(--pencil); }
 .belief { display: flex; flex-direction: column; gap: calc(20 * var(--u)); }
 .lab { font-family: var(--mono); font-size: calc(16 * var(--u)); font-weight: 500; color: var(--pencil); }
@@ -43,8 +47,7 @@ a:hover { color: var(--character); }
 .cell { border-radius: 4px; padding: calc(30 * var(--u)) calc(32 * var(--u)); display: flex; flex-direction: column; gap: calc(14 * var(--u)); }
 .cell b { font-size: calc(30 * var(--u)); font-weight: 500; line-height: 1.2; }
 .cell span { font-size: calc(19 * var(--u)); line-height: 1.55; text-wrap: pretty; }
-.tint-p { background: var(--precision-tint); } .tint-p b { color: var(--precision-deep); } .tint-p span { color: #1E2B31; }
-.tint-c { background: var(--character-tint); } .tint-c b { color: var(--character-deep); } .tint-c span { color: #33231A; }
+.tint-p, .tint-c { background: var(--tint); } .tint-p b, .tint-c b { color: var(--ink); } .tint-p span, .tint-c span { color: var(--graphite); }
 
 
 @media (max-width: 700px) {
@@ -52,6 +55,7 @@ a:hover { color: var(--character); }
   .poster { --u: .62px; width: 100%; aspect-ratio: auto; overflow: visible; padding: 28px 16px; gap: 32px; }
   .mast { flex-direction: column; gap: 4px; }
   .mast b { font-size: 14px; } .mast span, .lab { font-size: 12px; }
+  .mast img { height: 34px; }
   .belief h1 { font-size: 42px; }
   .belief p { font-size: 17px; }
   .grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 10px; }
@@ -84,7 +88,7 @@ a:hover { color: var(--character); }
 .card { background: var(--paper); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
 .card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
 .card div { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
-.card .num { font-family: var(--mono); font-size: 13px; color: var(--character); }
+.card .num { font-family: var(--mono); font-size: 13px; color: var(--pencil); }
 .card h3 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.1; margin: 0; }
 .card p { font-size: 15px; margin: 0; }
 .card nav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: auto; padding-top: 10px; font-family: var(--mono); font-size: 13px; }
